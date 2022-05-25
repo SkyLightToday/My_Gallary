@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;900&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+:root {
+    --dark: #070707;/*так чёрный ярче*/
+    --sizeindex: calc(1vw + 1vh);/*индекс будет меняться на размар экрана*/
+    --transition: 0.75s cubic-bezier(0.230, 0.700, 0.000, 1.000);/*плавность анимации*/
+}
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: var(--dark);
+    color: #fff;
+    font-family: 'Lato', sans-serif;
+    overflow: hidden;/*ограничение области видимости*/
+    line-height: 1.8;
+    /* font-size: calc(var(--sizeindex)); */
+}
+.slider {
+    height: 100%;
+    transform: rotate(15deg);/*поворот на 15%*/
+    overflow: visible;/*снимает огранечение слайдера*/
+    top: 10vh;
+}
+.slider_wrapper {
+    transition: var(--transition)!important;/*анимация, !important--принудительно, в swiper есть своя */
+    will-change: transform;/*увеличение аппаратных ресурсов*/
+}
+.slider__item {
+    max-height: 75vh;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform var(--transition), box-shadow var(--transition);/*задний фон*/
+}
+.slider__img {
+    width: 300%;
+    height: 100%;
+    background-size: cover;/*вырезает серединку?*/
+    position: absolute;
+    left: -100%;
+    transition: var(--transition)!important;/*анимация, !important--принудительно, в swiper есть своя */
+    will-change: transform;/*увеличение аппаратных ресурсов*/
+}
+.slider_bg {
+    z-index: 0;/*проваливаться за главный слайдер*/
+    transform: rotate(-20deg)!important;
+    top: -90vh;
+    left: -10vh;
+    opacity: 0.15;
+    filter:  blur(120px) saturate(10);/*размытие, смещение цвета. последовательность важна*/
+}
+.slider_bg .slider__item {
+    max-height: 100vh;
+}
+.slider__item.opened {
+    z-index: 2;
+    transform: rotate(-15deg) scale(1.4);/*scale(1.5)--увеличение*/
+    box-shadow: 0px 0px 0px 10000px rgb(0 0 0 /.75);/*затенение заднего фона*/
+}
+.description {
+    position: absolute;
+    font-size: calc(var(--sizeindex) * 0.8);
+    top: 20vh;
+    left: 8vw;
+    max-width: 24vw;/*20% от ширины*/
+    transition: opacity var(--transition), transform var(--transition);
+}
+.logo {
+    font-size: calc(var(--sizeindex) * 3.6);
+    font-weight: 900;
+    display: inline-block;/*т к будет анимация отдельно от текста*/
+    background: linear-gradient(45deg, darkMagenta, tomato, violet);/*пока не применился к тексту*/
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;/*теперь применилось к тексту*/
+}
+.description p {
+    opacity: 0.9;
+    transition: transform var(--transition);
+    transition-duration: 3s;
+}
+.description.hidden {
+    opacity: 0;
+    transform: translateY(5vh);
+}
+.description.hidden p {
+    transform: translateY(2vh);
+}
